@@ -6,6 +6,8 @@ import express from 'express';
 import { generateSwaggerDocs, setupSwagger } from './src/docs/swagger.js';
 import usuariosRoutes from './src/routes/usuariosRoutes.js';
 import tarefasRoutes from './src/routes/tarefasRoutes.js';
+import interessesRoutes from './src/routes/interessesRoutes.js';
+import formacaoRoutes from './src/routes/formacaoRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +19,8 @@ app.use(express.json());
 // Cada recurso fica em um router separado para manter organizacao.
 app.use('/usuarios', usuariosRoutes);
 app.use('/tarefas', tarefasRoutes);
+app.use('/interesses', interessesRoutes);
+app.use('/formacao', formacaoRoutes);
 
 app.get('/', (req, res) => {
   res.json({

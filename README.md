@@ -182,3 +182,8 @@ Os arquivos cobrem variaveis, metodos, API, tipos de requisicao HTTP e status co
 
 Uso educacional.
 
+
+{
+  "email": "gusta123@gmail.com",
+  "senha": "123456"
+}

@@ -21,3 +21,17 @@ CREATE TABLE IF NOT EXISTS tarefas (
         usuarioId  INTEGER NOT NULL,
         FOREIGN KEY (usuarioId) REFERENCES usuarios (id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS interesses (
+        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        titulo TEXT NOT NULL,
+        usuarioid INTEGER NOT NULL,
+        FOREIGN KEY (usuarioid) references usuarios (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS formacoes (
+        id         INTEGER PRIMARY KEY GENERATED ALWAYS as IDENTITY,
+        titulo     TEXT NOT NULL,
+        descricao  TEXT,
+        usuarioId  INTEGER NOT NULL,
+        FOREIGN KEY (usuarioId) REFERENCES usuarios (id) ON DELETE CASCADE
