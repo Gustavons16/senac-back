@@ -1,37 +1,59 @@
--- Arquivo de apoio para os alunos enxergarem o SQL das tabelas base.
--- Quando for criar uma tabela nova manualmente:
--- 1) escreva o CREATE TABLE aqui como rascunho e referencia;
--- 2) copie a mesma estrutura para src/data/db.js;
--- 3) suba o projeto para o backend executar o CREATE TABLE IF NOT EXISTS.
-
-CREATE TABLE IF NOT EXISTS usuarios (
-        id        INTEGER PRIMARY KEY GENERATED ALWAYS as IDENTITY,
-        nome      TEXT NOT NULL,
-        email     TEXT NOT NULL UNIQUE,
-        telefone  TEXT,
-        senha     TEXT NOT NULL,
-        foto      TEXT
-      );
-
-CREATE TABLE IF NOT EXISTS tarefas (
-        id         INTEGER PRIMARY KEY GENERATED ALWAYS as IDENTITY,
-        titulo     TEXT NOT NULL,
-        descricao  TEXT,
-        status     TEXT NOT NULL DEFAULT 'Novo',
-        usuarioId  INTEGER NOT NULL,
-        FOREIGN KEY (usuarioId) REFERENCES usuarios (id) ON DELETE CASCADE
+create table if not exists store (
+  id bigint generated always as identity primary key,
+  name text,
+  address text, -- Corrigido de 'adress' para 'address'
+  password text,
+  email text
 );
 
-CREATE TABLE IF NOT EXISTS interesses (
-        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        titulo TEXT NOT NULL,
-        usuarioid INTEGER NOT NULL,
-        FOREIGN KEY (usuarioid) references usuarios (id) ON DELETE CASCADE
+create table if not exists users ( -- Traduzido de 'usuario'
+  id bigint generated always as identity primary key,
+  email text, 
+  password text,
+  name text,
+  cellphone text,
+  datebirth date
 );
 
-CREATE TABLE IF NOT EXISTS formacoes (
-        id         INTEGER PRIMARY KEY GENERATED ALWAYS as IDENTITY,
-        titulo     TEXT NOT NULL,
-        descricao  TEXT,
-        usuarioId  INTEGER NOT NULL,
-        FOREIGN KEY (usuarioId) REFERENCES usuarios (id) ON DELETE CASCADE
+create table if not exists category ( 
+  id bigint generated always as identity primary key,
+  name text,
+  description text,
+  storeid int
+);
+
+create table if not exists product ( 
+  id bigint generated always as identity primary key,
+  name text,
+  description text,
+  price float,
+  categoryid int,
+  photo text,
+  ingredients text
+);
+
+create table if not exists cart ( 
+  id bigint generated always as identity primary key,
+  price float,
+  date date, 
+  discount float,
+  userid int,
+  status text
+);
+
+create table if not exists productcart ( 
+  id bigint generated always as identity primary key,
+  productid int,
+  cartid int
+);
+
+create table if not exists daysofjob ( 
+  id bigint generated always as identity primary key,
+  days text
+);
+
+create table if not exists productdays ( -- Traduzido de 'diasdeprodutos'
+  id bigint generated always as identity primary key,
+  daysid int,
+  productid int
+);
