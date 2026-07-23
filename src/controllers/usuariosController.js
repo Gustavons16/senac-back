@@ -14,7 +14,7 @@ export async function listar(req, res) {
   try {
     const db = await getDatabase();
     const usuarios = await db.all(
-      'SELECT id, nome, email, telefone, foto FROM usuarios ORDER BY id'
+      'SELECT id, name, email, password, cellphone,datebirth, foto FROM users ORDER BY id'
     );
     res.json(usuarios);
   } catch (erro) {
@@ -28,7 +28,7 @@ export async function buscarPorId(req, res) {
   try {
     const db = await getDatabase();
     const usuario = await db.get(
-      'SELECT id, nome, email, telefone, foto FROM usuarios WHERE id = ?',
+      'SELECT id, name, email, password, cellphone, datebirth, foto FROM users WHERE id = ?',
       [id]
     );
 
@@ -43,9 +43,9 @@ export async function buscarPorId(req, res) {
 }
 
 export async function criar(req, res) {
-  const { nome, email, telefone, senha } = req.body;
+  const { name, email, cellphone, password, datebirth } = req.body;
 
-  if (!nome || !email || !telefone || !senha) {
+  if (!name || !email || !cellphone || !password) {
     return res.status(400).json({ mensagem: 'Campos obrigatórios ausentes.' });
   }
 
@@ -53,18 +53,19 @@ export async function criar(req, res) {
     const db = await getDatabase();
 
     // Nunca salvamos senha em texto puro.
-    const senhaHash = await bcrypt.hash(senha, SALT_ROUNDS);
+    const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
     const resultado = await db.run(
-      'INSERT INTO usuarios (nome, email, telefone, senha) VALUES (?, ?, ?, ?)',
-      [nome, email, telefone, senhaHash]
+      'INSERT INTO users (name, email, cellphone, password, datebirth) VALUES (?, ?, ?, ?, ?)',
+      [name, email, cellphone, passwordHash, datebirth]
     );
 
     res.status(201).json({
       id: resultado.lastID,
-      nome,
+      name,
       email,
-      telefone,
+      cellphone,
+      datebirth,
       foto: null
     });
   } catch (erro) {
@@ -86,7 +87,7 @@ export async function atualizar(req, res) {
     });
   }
 
-  const { nome, email, telefone, senha } = req.body;
+  const { name, email, cellphone, password } = req.body;
 
   try {
     let novaFotoUpload = null;
@@ -116,15 +117,15 @@ export async function atualizar(req, res) {
     }
 
     await db.run(
-      'UPDATE usuarios SET nome = ?, email = ?, telefone = ?, senha = ?, foto = ? WHERE id = ?',
+      'UPDATE users SET name = ?, email = ?, cellphone = ?, password = ?, photo = ? WHERE id = ?',
       [novoNome, novoEmail, novoTelefone, novaSenha, novaFoto, idAlvo]
     );
 
     res.json({
       id: idAlvo,
-      nome: novoNome,
+      name: novoNome,
       email: novoEmail,
-      telefone: novoTelefone,
+      cellhpone: novoTelefone,
       foto: novaFoto
     });
   } catch (erro) {
@@ -152,7 +153,7 @@ export async function remover(req, res) {
 
   try {
     const db = await getDatabase();
-    const resultado = await db.run('DELETE FROM usuarios WHERE id = ?', [idAlvo]);
+    const resultado = await db.run('DELETE FROM users WHERE id = ?', [idAlvo]);
 
     if (resultado.changes === 0) {
       return res.status(404).json({ mensagem: 'Usuário não encontrado.' });
@@ -165,16 +166,16 @@ export async function remover(req, res) {
 }
 
 export async function login(req, res) {
-  const { email, senha } = req.body;
+  const { email, password } = req.body;
 
-  if (!email || !senha) {
+  if (!email || !password) {
     return res.status(400).json({ mensagem: 'Informe email e senha.' });
   }
 
   try {
     const db = await getDatabase();
     const usuario = await db.get(
-      'SELECT id, nome, email, senha, foto FROM usuarios WHERE email = ?',
+      'SELECT id, name, email, password, foto FROM users WHERE email = ?',
       [email]
     );
 
@@ -182,21 +183,21 @@ export async function login(req, res) {
       return res.status(401).json({ mensagem: 'Credenciais inválidas.' });
     }
 
-    const senhaConfere = await bcrypt.compare(senha, usuario.senha);
-    if (!senhaConfere) {
+    const passwordCof = await bcrypt.compare(password, usuario.password);
+    if (!passwordCof) {
       return res.status(401).json({ mensagem: 'Credenciais inválidas.' });
     }
 
     // Token identifica o usuario nas proximas requisicoes protegidas.
     const token = jwt.sign(
-      { usuarioId: usuario.id, nome: usuario.nome },
+      { usuarioId: usuario.id, name: usuario.name },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
     );
 
     res.json({
       token,
-      usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, foto: usuario.foto ?? null }
+      usuario: { id: usuario.id, name: usuario.name, email: usuario.email, foto: usuario.foto ?? null }
     });
   } catch (erro) {
     console.error('[usuarios.login]', erro);
@@ -208,7 +209,7 @@ export async function perfil(req, res) {
   try {
     const db = await getDatabase();
     const usuario = await db.get(
-      'SELECT id, nome, email, telefone, foto FROM usuarios WHERE id = ?',
+      'SELECT id, name, email, cellphone, foto, datebirth FROM users WHERE id = ?',
       [req.usuarioId]
     );
 

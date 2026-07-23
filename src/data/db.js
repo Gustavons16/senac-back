@@ -53,31 +53,7 @@ function getConnectionErrorMessage(error, connectionString) {
 
   return rawMessage;
 }
-
-async function criarTabelasBase(pool) {
-  // Tabelas criadas apenas se ainda nao existirem.
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS usuarios (
-      id INTEGER PRIMARY KEY GENERATED ALWAYS as IDENTITY,
-      nome TEXT NOT NULL,
-      email TEXT NOT NULL UNIQUE,
-      telefone TEXT,
-      senha TEXT NOT NULL,
-      foto TEXT
-    );
-  `);
-
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS tarefas (
-      id INTEGER PRIMARY KEY GENERATED ALWAYS as IDENTITY,
-      titulo TEXT NOT NULL,
-      descricao TEXT,
-      status TEXT NOT NULL DEFAULT 'Novo',
-      usuarioId INTEGER NOT NULL,
-      FOREIGN KEY (usuarioId) REFERENCES usuarios (id) ON DELETE CASCADE
-    );
-  `);
-}
+  
 
 function toPgPlaceholders(sql) {
   let index = 0;
@@ -136,7 +112,6 @@ export async function getDatabase() {
     try {
       // Valida conexao e cria as tabelas base (sem apagar dados existentes).
       await pool.query('SELECT 1');
-      await criarTabelasBase(pool);
     } catch (error) {
       const mensagem = getConnectionErrorMessage(error, connectionString);
       throw new Error(`Falha ao conectar no banco: ${mensagem}`);
