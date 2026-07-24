@@ -7,7 +7,7 @@ import { generateSwaggerDocs, setupSwagger } from './src/docs/swagger.js';
 import usuariosRoutes from './src/routes/usuariosRoutes.js';
 import formacaoRoutes from './src/routes/formacaoRoutes.js';
 import storeRoutes from './src/routes/storeRoutes.js';
-
+import categoryRoutes from './src/routes/categoryRoutes.js'
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use('/usuarios', usuariosRoutes);
 app.use('/formacao', formacaoRoutes);
 app.use('/stores', storeRoutes);
-
+app.use('/category', categoryRoutes);
 
 app.get('/', (req, res) => {
   res.json({
