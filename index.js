@@ -8,6 +8,7 @@ import usuariosRoutes from './src/routes/usuariosRoutes.js';
 import formacaoRoutes from './src/routes/formacaoRoutes.js';
 import storeRoutes from './src/routes/storeRoutes.js';
 import categoryRoutes from './src/routes/categoryRoutes.js'
+import productRoutes from './src/routes/productRoutes.js'
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -20,6 +21,7 @@ app.use('/usuarios', usuariosRoutes);
 app.use('/formacao', formacaoRoutes);
 app.use('/stores', storeRoutes);
 app.use('/category', categoryRoutes);
+app.use('/products', productRoutes);
 
 app.get('/', (req, res) => {
   res.json({
