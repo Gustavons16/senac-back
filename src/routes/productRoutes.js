@@ -4,6 +4,15 @@ import { autenticarJWT } from '../middlewares/autenticacao.js'
 
 const router = Router();
 router.get(
+    '/dayproducts/:dayid' ,
+      /* #swagger.tags = ['Produto'] */
+    /* #swagger.summary = 'Listar produtos do dia' */
+    /* #swagger.security = [{ "bearerAuth": [] }] */
+    controller.listardia
+)
+
+
+router.get(
       '/:storeid' ,
       /* #swagger.tags = ['Produto'] */
     /* #swagger.summary = 'Listar produto da loja selecionada' */

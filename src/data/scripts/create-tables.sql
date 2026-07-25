@@ -49,7 +49,8 @@ create table if not exists productcart (
 
 create table if not exists daysofjob ( 
   id bigint generated always as identity primary key,
-  days text
+  day text,
+  storeid int
 );
 
 create table if not exists productdays ( -- Traduzido de 'diasdeprodutos'

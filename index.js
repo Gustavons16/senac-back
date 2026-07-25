@@ -9,6 +9,8 @@ import formacaoRoutes from './src/routes/formacaoRoutes.js';
 import storeRoutes from './src/routes/storeRoutes.js';
 import categoryRoutes from './src/routes/categoryRoutes.js'
 import productRoutes from './src/routes/productRoutes.js'
+import dayofjobRoutes from './src/routes/dayofjobRoutes.js'
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -22,7 +24,7 @@ app.use('/formacao', formacaoRoutes);
 app.use('/stores', storeRoutes);
 app.use('/category', categoryRoutes);
 app.use('/products', productRoutes);
-
+app.use('/dayofjob', dayofjobRoutes);
 app.get('/', (req, res) => {
   res.json({
     status: 'ok',

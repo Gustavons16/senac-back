@@ -39,3 +39,9 @@ alter table productdays
 add constraint fk_product_days_job
 foreign key (daysid)
 references daysofjob(id);
+
+-- 7. Links store to daysofjob
+alter table daysofjob
+add constraint fk_store
+foreign key (storeid)
+references store(id);

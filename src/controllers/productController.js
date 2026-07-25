@@ -1,6 +1,22 @@
 import { getDatabase } from '../data/db.js';
 import { RecordExpiration$ } from '@aws-sdk/client-s3';
 
+export async function listardia(req, res) {
+    const { dayid } = req.params;
+    const db = await getDatabase();
+
+    const products = await db.all(
+  'SELECT p.id, p.name, p.description, p.price, p.categoryid, p.photo, p.ingredients FROM product p   inner join productdays pd on p.id = pd.productid    inner join dayofjob dj on pd.daysid = dj.id    WHERE dj.id = ? ',
+   
+  [dayid]
+
+        
+    );
+    res.json(products);
+}
+
+
+
 export async function listar(req, res) {
     const { storeid } = req.params;
     const db = await getDatabase();
