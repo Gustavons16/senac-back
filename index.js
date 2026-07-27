@@ -5,7 +5,6 @@ import express from 'express';
 
 import { generateSwaggerDocs, setupSwagger } from './src/docs/swagger.js';
 import usuariosRoutes from './src/routes/usuariosRoutes.js';
-import formacaoRoutes from './src/routes/formacaoRoutes.js';
 import storeRoutes from './src/routes/storeRoutes.js';
 import categoryRoutes from './src/routes/categoryRoutes.js'
 import productRoutes from './src/routes/productRoutes.js'
@@ -20,23 +19,12 @@ app.use(express.json());
 
 // Cada recurso fica em um router separado para manter organizacao.
 app.use('/usuarios', usuariosRoutes);
-app.use('/formacao', formacaoRoutes);
 app.use('/stores', storeRoutes);
 app.use('/category', categoryRoutes);
 app.use('/products', productRoutes);
 app.use('/dayofjob', dayofjobRoutes);
 app.get('/', (req, res) => {
-  res.json({
-    status: 'ok',
-    recursos: [
-      'POST /usuarios',
-      'POST /usuarios/login',
-      'GET  /usuarios/perfil',
-      '/usuarios',
-      '/tarefas',
-      '/docs'
-    ]
-  });
+    res.redirect(301, '/docs');
 });
 
 app.use((err, req, res, next) => {
@@ -45,7 +33,6 @@ app.use((err, req, res, next) => {
 });
 
 async function start() {
-  await generateSwaggerDocs();
   setupSwagger(app);
 
   app.listen(PORT, () => {

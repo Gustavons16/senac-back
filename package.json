@@ -4,9 +4,11 @@
   "description": "API REST didática com Express + Supabase/PostgreSQL — CRUD de usuários e tarefas, autenticação JWT e upload no Supabase Storage (SENAC / UC3)",
   "main": "index.js",
   "type": "module",
-  "scripts": {
+   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "npm run build && npm start",
+    "swagger": "node src/docs/generate-swagger.js",
+    "build": "npm run swagger"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.840.0",
