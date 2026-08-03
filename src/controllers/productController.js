@@ -22,7 +22,7 @@ export async function listar(req, res) {
     const db = await getDatabase();
 
     const products = await db.all(
-        ' SELECT p.id, p.name, p.description, p.price, p.categoryid, p.photo, p.ingredients FROM product p inner join category c on c.id = p.categoryid inner join store s on s.id = c.storeid WHERE s.id = ?',
+        ' SELECT p.id, p.name, p.description, p.price, p.categoryid,c.name as category, p.photo, p.ingredients FROM product p inner join category c on c.id = p.categoryid inner join store s on s.id = c.storeid WHERE s.id = ?',
         [storeid]
         
     );
