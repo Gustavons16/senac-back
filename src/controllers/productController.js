@@ -2,13 +2,13 @@ import { getDatabase } from '../data/db.js';
 import { RecordExpiration$ } from '@aws-sdk/client-s3';
 
 export async function listardia(req, res) {
-    const { dayid } = req.params;
+    const { dayid,storeid } = req.params;
     const db = await getDatabase();
 
     const products = await db.all(
-  'SELECT p.id, p.name, p.description, p.price, p.categoryid, p.photo, p.ingredients FROM product p   inner join productdays pd on p.id = pd.productid    inner join dayofjob dj on pd.daysid = dj.id    WHERE dj.id = ? ',
+  'SELECT p.id, p.name, p.description, p.price, p.categoryid, p.photo, p.ingredients FROM product p inner join productdays pd on p.id = pd.productid   inner join dayofjob dj on pd.daysid = dj.id inner join category c on c.id = p.categoryid WHERE dj.id = ? and c.storeid = ? ',
    
-  [dayid]
+  [dayid,storeid]
 
         
     );
