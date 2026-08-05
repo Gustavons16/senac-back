@@ -1,10 +1,9 @@
 import {Router} from 'express'
 import * as controller from '../controllers/productController.js' ;
 import { autenticarJWT } from '../middlewares/autenticacao.js'
-
 const router = Router();
 router.get(
-    '/dayproducts/:dayid/store/:storeid' ,
+    '/dayproducts/:day/store/:storeid' ,
       /* #swagger.tags = ['Produto'] */
     /* #swagger.summary = 'Listar produtos do dia' */
     /* #swagger.security = [{ "bearerAuth": [] }] */
@@ -35,4 +34,4 @@ router.delete(
     /* #swagger.security = [{ "bearerAuth": [] }] */
     controller.remover
 );
-export default router
+export default router;
