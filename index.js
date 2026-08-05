@@ -9,7 +9,6 @@ import storeRoutes from './src/routes/storeRoutes.js';
 import categoryRoutes from './src/routes/categoryRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
 import dayofjobRoutes from './src/routes/dayofjobRoutes.js';
-import productRoutes from './routes/productRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
