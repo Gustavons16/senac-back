@@ -28,6 +28,17 @@ export async function listar(req, res) {
     );
     res.json(products);
 }
+export async function buscar(req, res) {
+    const { id } = req.params;
+    const db = await getDatabase();
+
+    const products = await db.all(
+        ' SELECT p.id, p.name, p.description, p.price, p.categoryid,c.name as category, p.photo, p.ingredients FROM product p inner join category c on c.id = p.categoryid inner join store s on s.id = c.storeid WHERE p.id = ?',
+        [id]
+        
+    );
+    res.json(products[0]);
+}
     
 export async function criar(req, res) {
     const { name, description, price, categoryid, photo, ingredients } = req.body;

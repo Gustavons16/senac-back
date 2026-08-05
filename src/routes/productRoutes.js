@@ -34,4 +34,12 @@ router.delete(
     /* #swagger.security = [{ "bearerAuth": [] }] */
     controller.remover
 );
+router.get(
+    '/produto/:id',
+    /* #swagger.tags = ['Produto'] */
+        /* #swagger.summary = 'Buscar produto pelo Id' */
+        /* #swagger.security = [{ "bearerAuth": [] }] */
+        controller.buscar
+
+)
 export default router;
