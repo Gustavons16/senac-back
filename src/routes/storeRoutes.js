@@ -2,7 +2,7 @@ import { Router } from 'express';
 import * as controller from '../controllers/storeControllers.js';
 import { autenticarJWT } from '../middlewares/autenticacao.js';
 
-const router = Router ();
+const router = Router (autenticarJWT);
 
 //router.use(autenticarJWT);
 

@@ -1,7 +1,7 @@
 import {Router} from 'express'
 import * as controller from '../controllers/productController.js' ;
 import { autenticarJWT } from '../middlewares/autenticacao.js'
-const router = Router();
+const router = Router(autenticarJWT);
 router.get(
     '/dayproducts/:day/store/:storeid' ,
       /* #swagger.tags = ['Produto'] */

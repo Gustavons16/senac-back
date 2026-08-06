@@ -3,7 +3,7 @@ import { RecordExpiration$ } from '@aws-sdk/client-s3';
 
 export async function adicionarProduto(req, res) {
     const {produtoid} = req.params;
-    const usuarioid = req.usuarioid;
+    const usuarioid = req.usuarioId;
     var cartid = 0 
 
     const db = await getDatabase();
