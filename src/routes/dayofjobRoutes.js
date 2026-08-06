@@ -2,8 +2,8 @@ import { Router } from 'express';
 import * as controller from '../controllers/dayofjobControllers.js';
 import { autenticarJWT } from '../middlewares/autenticacao.js';
 
-const router = Router(autenticarJWT);
-
+const router = Router();
+router.use(autenticarJWT);
 
 router.get(
     '/:storeid',
