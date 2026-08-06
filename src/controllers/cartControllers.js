@@ -45,7 +45,7 @@ export async function removerProduto(req, res) {
     
 
     const resultado = await db.run(
-    'DELETE productcart where id=?',
+    'DELETE FROM productcart where id=?',
     [productcartid]
     );
     
