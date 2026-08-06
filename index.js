@@ -9,6 +9,7 @@ import storeRoutes from './src/routes/storeRoutes.js';
 import categoryRoutes from './src/routes/categoryRoutes.js';
 import productRoutes from './src/routes/productRoutes.js';
 import dayofjobRoutes from './src/routes/dayofjobRoutes.js';
+import cartRoutes from './src/routes/cartRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ app.use('/stores', storeRoutes);
 app.use('/category', categoryRoutes);
 app.use('/products', productRoutes);
 app.use('/dayofjob', dayofjobRoutes);
+app.use('/cart', cartRoutes);
 app.get('/', (req, res) => {
     res.redirect(301, '/docs');
 });
