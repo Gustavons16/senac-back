@@ -75,7 +75,7 @@ export async function listarProdutos(req,res) {
         cartid=resultadocarrinho.id
 
     }
-    const produtos = db.all(
+    const produtos = await db.all(
         'SELECT pc.id as productcartid, p.* from product p inner join productcart pc on p.id = pc.productid inner join cart c on c.id = pc.cartid where c.id = ?',
         [cartid]
     )
