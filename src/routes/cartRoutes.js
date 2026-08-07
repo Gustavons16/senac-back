@@ -23,4 +23,11 @@ router.delete(
     controller.removerProduto
 );
 
+router.get(
+    '/produtos',
+    /* #swagger.tags = ['Carrinho'] */
+    /* #swagger.summary = 'Listar produtos do carrinho' */
+    /* #swagger.security = [{ "bearerAuth": [] }] */
+    controller.listarProdutos
+)
 export default router;
