@@ -57,9 +57,7 @@ export async function removerProduto(req, res) {
 export async function listarProdutos(req,res) {
    const usuarioid = req.usuarioId;
     var cartid = 0 
-
     const db = await getDatabase();
-    
     const resultadocarrinho = await db.get(
         "SELECT *from cart where userid = ? order by date desc",
         [usuarioid]
@@ -71,13 +69,45 @@ export async function listarProdutos(req,res) {
         );
         cartid = resultadoinsert.lastID
     } 
-    else{
+            else{
         cartid=resultadocarrinho.id
 
     }
-    const produtos = await db.all(
+              const produtos = await db.all(
         'SELECT pc.id as productcartid, p.* from product p inner join productcart pc on p.id = pc.productid inner join cart c on c.id = pc.cartid where c.id = ?',
         [cartid]
     )
     res.json(produtos);
+}
+
+
+       export async function finalizarPedido(req, res) {
+         const { total, itens } = req.body; 
+
+   try {
+       const db = await getDatabase();
+    
+       const statusInicial = 'aguardandoconfirmacao'; 
+
+        const resultado = await db.run(
+        'INSERT INTO pedidos (usuarioId, total, status, data_criacao) VALUES (?, ?, ?,)',
+          [req.usuarioId, total, statusInicial]
+    );
+
+       const pedidoId = resultado.lastID;
+   
+     res.status(201).json({ 
+        mensagem: 'Pedido finalizado com sucesso!', 
+        pedidoId, 
+       status: statusInicial 
+      });
+
+  }   catch (erro) {
+  res.status(500).json({ mensagem: 'Erro ao finalizar pedido.', erro: erro.message });
+  }
+}
+
+export async function atualizarStatusPedido(req, res) {
+  const { id } = req.params; 
+  const { status } = req.body; 
 }

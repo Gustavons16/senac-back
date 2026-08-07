@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import * as controller from '../controllers/cartControllers.js';
 import { autenticarJWT } from '../middlewares/autenticacao.js';
+import { finalizarPedido, atualizarStatusPedido } from '../controllers/pedidosController.js';
 
 const router = Router();
-router.use(autenticarJWT);
 
+router.use(autenticarJWT);
 
 router.post(
     '/produto/:produtoid',
