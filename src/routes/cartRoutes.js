@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as controller from '../controllers/cartControllers.js';
 import { autenticarJWT } from '../middlewares/autenticacao.js';
-import { finalizarPedido, atualizarStatusPedido } from '../controllers/pedidosController.js';
+import { atualizarStatusPedido } from '../controllers/pedidosController.js';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.post(
   controller.adicionarProduto
 );
 
-// Remover Produto do Carrinho
+// Remover produto do carrinho
 router.delete(
   '/productcart/:productcartid',
   /* #swagger.tags = ['Carrinho'] */
@@ -34,22 +34,31 @@ router.get(
   controller.listarProdutos
 );
 
-// Atualizar item ou status do pedido
+// Atualizar carrinho (recalcular total e desconto)
 router.put(
-  '/atualizar/:id',
+  '/atualizar',
   /* #swagger.tags = ['Carrinho'] */
-  /* #swagger.summary = 'Atualizar pedido do carrinho' */
+  /* #swagger.summary = 'Atualizar carrinho (recalcular total e desconto)' */
   /* #swagger.security = [{ "bearerAuth": [] }] */
-  atualizarStatusPedido
+  controller.atualizarCarrinho
 );
 
-// Finalizar pedido
+// Finalizar compra do carrinho
 router.post(
   '/finalizar',
   /* #swagger.tags = ['Carrinho'] */
-  /* #swagger.summary = 'Finalizar pedido do carrinho' */
+  /* #swagger.summary = 'Finalizar compra do carrinho' */
   /* #swagger.security = [{ "bearerAuth": [] }] */
-  finalizarPedido
+  controller.finalizarCarrinho
+);
+
+// Atualizar status de um pedido já finalizado
+router.put(
+  '/pedido/:id/status',
+  /* #swagger.tags = ['Pedidos'] */
+  /* #swagger.summary = 'Atualizar status do pedido' */
+  /* #swagger.security = [{ "bearerAuth": [] }] */
+  atualizarStatusPedido
 );
 
 export default router;
