@@ -96,3 +96,29 @@ export async function removerProduto(req, res) {
     res.json({ mensagem: 'PRODUTO REMOVIDO COM SUCESSO' });
 }
 
+export async function atualizarStatusPedido(req, res) {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const db = await getDatabase();
+    const atual = await db.get(
+        'SELECT status FROM cart WHERE id = ?',
+        [id]
+    );
+
+    if (!atual) {
+        return res.status(404).json({ mensagem: 'Carrinho não encontrado.' });
+    }
+
+    const resultado = await db.run(
+        'UPDATE cart SET status = ? WHERE id = ?',
+        [status, id]
+    );
+
+    if (resultado.changes === 0) {
+        return res.status(404).json({ mensagem: 'CARRINHO NÃO ATUALIZADO' });
+    }
+
+    res.json({ mensagem: 'STATUS ATUALIZADO COM SUCESSO' });
+
+}

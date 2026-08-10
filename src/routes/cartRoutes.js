@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import * as controller from '../controllers/cartControllers.js';
 import { autenticarJWT } from '../middlewares/autenticacao.js';
-import { atualizarStatusPedido } from '../controllers/pedidosController.js';
 
 const router = Router();
 
@@ -34,31 +33,13 @@ router.get(
   controller.listarProdutos
 );
 
-// Atualizar carrinho (recalcular total e desconto)
-router.put(
-  '/atualizar',
-  /* #swagger.tags = ['Carrinho'] */
-  /* #swagger.summary = 'Atualizar carrinho (recalcular total e desconto)' */
-  /* #swagger.security = [{ "bearerAuth": [] }] */
-  controller.atualizarCarrinho
-);
-
-// Finalizar compra do carrinho
-router.post(
-  '/finalizar',
-  /* #swagger.tags = ['Carrinho'] */
-  /* #swagger.summary = 'Finalizar compra do carrinho' */
-  /* #swagger.security = [{ "bearerAuth": [] }] */
-  controller.finalizarCarrinho
-);
-
 // Atualizar status de um pedido já finalizado
 router.put(
-  '/pedido/:id/status',
-  /* #swagger.tags = ['Pedidos'] */
-  /* #swagger.summary = 'Atualizar status do pedido' */
+  '/:id/status',
+  /* #swagger.tags = ['Carrinho'] */
+  /* #swagger.summary = 'Atualizar status do carrinho' */
   /* #swagger.security = [{ "bearerAuth": [] }] */
-  atualizarStatusPedido
+  controller.atualizarStatusPedido
 );
 
 export default router;
