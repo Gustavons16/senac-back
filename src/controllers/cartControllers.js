@@ -9,14 +9,14 @@ export async function adicionarProduto(req, res) {
     const db = await getDatabase();
 
     const resultadocarrinho = await db.get(
-        "SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = 'aberto') ORDER BY date DESC",
+        "SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = 'novo') ORDER BY date DESC",
         [usuarioid]
     );
 
     if (resultadocarrinho == null) {
         const resultadoinsert = await db.run(
             'INSERT INTO cart (price, discount, userid, status) VALUES (?, ?, ?, ?)',
-            [0, 0, usuarioid, 'aberto']
+            [0, 0, usuarioid, 'novo']
         );
         cartid = resultadoinsert.lastID;
     } else {
@@ -42,16 +42,23 @@ export async function listarProdutos(req, res) {
     const db = await getDatabase();
 
     const resultadocarrinho = await db.get(
-        "SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = 'aberto') ORDER BY date DESC",
+        "SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = 'novo') ORDER BY date DESC",
         [usuarioid]
     );
+    
+    var carrinho = resultadocarrinho;
 
     if (resultadocarrinho == null) {
         const resultadoinsert = await db.run(
             'INSERT INTO cart (price, discount, userid, status) VALUES (?, ?, ?, ?)',
-            [0, 0, usuarioid, 'aberto']
+            [0, 0, usuarioid, 'novo']
         );
         cartid = resultadoinsert.lastID;
+        carrinho = {
+            id : cartid, 
+            status : 'novo',
+            userid : usuarioid
+        }
     } else {
         cartid = resultadocarrinho.id;
     }
@@ -67,14 +74,13 @@ export async function listarProdutos(req, res) {
 
     const subtotal = produtos.reduce((soma, p) => soma + Number(p.price), 0);
     const desconto = Number(resultadocarrinho?.discount ?? 0);
-
+    carrinho.total = Math.max(0, subtotal - desconto)
+    carrinho.discount = desconto
+    carrinho.subtotal = subtotal
     res.json({
-        cartid,
-        produtos,
-        subtotal,
-        discount: desconto,
-        total: Math.max(0, subtotal - desconto)
-    });
+        carrinho,
+        produtos
+      });
 }
 export async function removerProduto(req, res) {
     const { productcartid } = req.params;
@@ -86,7 +92,7 @@ export async function removerProduto(req, res) {
         `DELETE FROM productcart WHERE id = ?
            AND cartid IN (
              SELECT id FROM cart
-             WHERE userid = ? AND (status IS NULL OR status = 'aberto')
+             WHERE userid = ? AND (status IS NULL OR status = 'novo')
            )`,
         [productcartid, usuarioid]
     );
