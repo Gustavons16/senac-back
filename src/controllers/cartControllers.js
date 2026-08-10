@@ -1,3 +1,6 @@
+import { getDatabase } from '../data/db.js';
+import { RecordExpiration$ } from '@aws-sdk/client-s3';
+
 export async function adicionarProduto(req, res) {
     const { produtoid } = req.params;
     const usuarioid = req.usuarioId;
