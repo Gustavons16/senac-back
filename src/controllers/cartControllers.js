@@ -42,7 +42,7 @@ export async function listarProdutos(req, res) {
     const db = await getDatabase();
 
     const resultadocarrinho = await db.get(
-        'SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = "aberto") ORDER BY date DESC',
+        "SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = 'aberto') ORDER BY date DESC",
         [usuarioid]
     );
 
@@ -83,11 +83,10 @@ export async function removerProduto(req, res) {
     const db = await getDatabase();
 
     const resultado = await db.run(
-        `DELETE FROM productcart
-         WHERE id = ?
+        `DELETE FROM productcart WHERE id = ?
            AND cartid IN (
              SELECT id FROM cart
-             WHERE userid = ? AND (status IS NULL OR status = "aberto")
+             WHERE userid = ? AND (status IS NULL OR status = 'aberto')
            )`,
         [productcartid, usuarioid]
     );
