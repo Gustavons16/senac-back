@@ -9,7 +9,7 @@ export async function adicionarProduto(req, res) {
     const db = await getDatabase();
 
     const resultadocarrinho = await db.get(
-        'SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = "aberto") ORDER BY date DESC',
+        "SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = 'aberto') ORDER BY date DESC",
         [usuarioid]
     );
 
