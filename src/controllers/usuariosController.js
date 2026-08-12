@@ -111,7 +111,7 @@ export async function atualizar(req, res) {
     }
 
     await db.run(
-      'UPDATE users SET name = ?, email = ?, cellphone = ?, password = ?, photo = ? WHERE id = ?',
+      'UPDATE users SET name = ?, email = ?, cellphone = ?, password = ?, foto = ? WHERE id = ?',
       [novoNome, novoEmail, novoTelefone, novaSenha, novaFoto, idAlvo]
     );
 
