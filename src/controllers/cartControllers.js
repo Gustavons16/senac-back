@@ -144,7 +144,8 @@ export async function listarCarrinhos(req, res) {
         [usuarioid]
     );
 
-    for (const carrinho of carrinhos) {
+
+    for (var carrinho of carrinhos) {
         carrinho = await buscarDadosCarrinho(carrinho,db)
     }
 
