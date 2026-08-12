@@ -93,16 +93,16 @@ export async function atualizar(req, res) {
     }
 
     const db = await getDatabase();
-    const atual = await db.get('SELECT * FROM usuarios WHERE id = ?', [idAlvo]);
+    const atual = await db.get('SELECT * FROM users WHERE id = ?', [idAlvo]);
 
     if (!atual) {
       return res.status(404).json({ mensagem: 'Usuário não encontrado.' });
     }
 
     // Atualizacao parcial: se campo nao vier no body, mantem o valor atual.
-    const novoNome = nome ?? atual.nome;
+    const novoNome = nome ?? atual.name;
     const novoEmail = email ?? atual.email;
-    const novoTelefone = telefone ?? atual.telefone;
+    const novoTelefone = telefone ?? atual.cellphone;
     const novaFoto = novaFotoUpload ?? req.body.foto ?? atual.foto;
     let novaSenha = atual.senha;
 
