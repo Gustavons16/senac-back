@@ -80,12 +80,6 @@ export async function criar(req, res) {
 export async function atualizar(req, res) {
   const idAlvo = Number(req.params.id);
 
-  // Regra de permissao: usuario so altera o proprio cadastro.
-  if (idAlvo !== req.usuarioId) {
-    return res.status(403).json({
-      mensagem: 'Você só pode editar o próprio usuário.'
-    });
-  }
 
   const { name, email, cellphone, password } = req.body;
 
