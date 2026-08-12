@@ -166,7 +166,7 @@ async function buscarDadosCarrinho(carrinho,db) {
     );
 
     const subtotal = produtos.reduce((soma, p) => soma + Number(p.price), 0);
-    const desconto = Number(resultadocarrinho?.discount ?? 0);
+    const desconto = Number(carrinho?.discount ?? 0);
     carrinho.total = Math.max(0, subtotal - desconto)
     carrinho.discount = desconto
     carrinho.subtotal = subtotal
