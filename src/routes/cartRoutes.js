@@ -33,6 +33,14 @@ router.get(
   controller.listarProdutos
 );
 
+router.get(
+  '/carrinhos',
+  /* #swagger.tags = ['Carrinho'] */
+  /* #swagger.summary = 'Listar produtos do carrinho' */
+  /* #swagger.security = [{ "bearerAuth": [] }] */
+  controller.listarCarrinhos
+);
+
 // Atualizar status de um pedido já finalizado
 router.put(
   '/:id/status',

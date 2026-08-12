@@ -130,3 +130,20 @@ export async function atualizarStatusPedido(req, res) {
     res.json({ mensagem: 'STATUS ATUALIZADO COM SUCESSO' });
 
 }
+
+
+export async function listarCarrinhos(req, res) {
+    const usuarioid = req.usuarioId;
+    
+
+    const db = await getDatabase();
+
+    const carrinhos = await db.get(
+        "SELECT * FROM cart WHERE userid = ? ORDER BY date DESC",
+        [usuarioid]
+    );
+    
+    res.json({
+        carrinhos
+      });
+}
