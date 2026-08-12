@@ -145,7 +145,7 @@ export async function listarCarrinhos(req, res) {
     );
 
     for (const carrinho of carrinhos) {
-        carrinho = await buscarDadosCarrinho(carrinho)
+        carrinho = await buscarDadosCarrinho(carrinho,db)
     }
 
     res.json(
@@ -153,7 +153,9 @@ export async function listarCarrinhos(req, res) {
     );
 }
 
-async function buscarDadosCarrinho(carrinho) {
+async function buscarDadosCarrinho(carrinho,db) {
+
+
     const produtos = await db.all(
         `SELECT pc.id AS productcartid, p.*
          FROM product p
