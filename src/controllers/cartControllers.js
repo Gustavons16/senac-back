@@ -82,6 +82,7 @@ export async function listarProdutos(req, res) {
         produtos
       });
 }
+
 export async function removerProduto(req, res) {
     const { productcartid } = req.params;
     const usuarioid = req.usuarioId;
@@ -142,8 +143,32 @@ export async function listarCarrinhos(req, res) {
         "SELECT * FROM cart WHERE userid = ? ORDER BY date DESC",
         [usuarioid]
     );
-    
+    carrinhos.forEach(carrinho => {
+        carrinho = buscarDadosCarrinho(carrinho)
+        
+    });
     res.json(
         carrinhos
       );
+}
+
+function buscarDadosCarrinho(carrinho){
+     const produtos = await db.all(
+        `SELECT pc.id AS productcartid, p.*
+         FROM product p
+         INNER JOIN productcart pc ON p.id = pc.productid
+         INNER JOIN cart c ON c.id = pc.cartid
+         WHERE c.id = ?`,
+        [carrinho.id]
+    );
+
+    const subtotal = produtos.reduce((soma, p) => soma + Number(p.price), 0);
+    const desconto = Number(resultadocarrinho?.discount ?? 0);
+    carrinho.total = Math.max(0, subtotal - desconto)
+    carrinho.discount = desconto
+    carrinho.subtotal = subtotal
+    carrinho.produtos = produtos
+
+    return carrinho
+
 }
