@@ -100,14 +100,14 @@ export async function atualizar(req, res) {
     }
 
     // Atualizacao parcial: se campo nao vier no body, mantem o valor atual.
-    const novoNome = nome ?? atual.name;
+    const novoNome = name ?? atual.name;
     const novoEmail = email ?? atual.email;
-    const novoTelefone = telefone ?? atual.cellphone;
+    const novoTelefone = cellphone ?? atual.cellphone;
     const novaFoto = novaFotoUpload ?? req.body.foto ?? atual.foto;
     let novaSenha = atual.senha;
 
-    if (senha) {
-      novaSenha = await bcrypt.hash(senha, SALT_ROUNDS);
+    if (password) {
+      novaSenha = await bcrypt.hash(password, SALT_ROUNDS);
     }
 
     await db.run(
