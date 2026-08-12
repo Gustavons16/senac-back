@@ -45,7 +45,7 @@ export async function listarProdutos(req, res) {
         "SELECT * FROM cart WHERE userid = ? AND (status IS NULL OR status = 'novo') ORDER BY date DESC",
         [usuarioid]
     );
-    
+
     var carrinho = resultadocarrinho;
 
     if (resultadocarrinho == null) {
@@ -55,9 +55,9 @@ export async function listarProdutos(req, res) {
         );
         cartid = resultadoinsert.lastID;
         carrinho = {
-            id : cartid, 
-            status : 'novo',
-            userid : usuarioid
+            id: cartid,
+            status: 'novo',
+            userid: usuarioid
         }
     } else {
         cartid = resultadocarrinho.id;
@@ -80,7 +80,7 @@ export async function listarProdutos(req, res) {
     res.json({
         carrinho,
         produtos
-      });
+    });
 }
 
 export async function removerProduto(req, res) {
@@ -135,7 +135,7 @@ export async function atualizarStatusPedido(req, res) {
 
 export async function listarCarrinhos(req, res) {
     const usuarioid = req.usuarioId;
-    
+
 
     const db = await getDatabase();
 
@@ -143,17 +143,18 @@ export async function listarCarrinhos(req, res) {
         "SELECT * FROM cart WHERE userid = ? ORDER BY date DESC",
         [usuarioid]
     );
-    carrinhos.forEach(carrinho => {
-        carrinho = buscarDadosCarrinho(carrinho)
-        
-    });
+
+    for (const carrinho of carrinhos) {
+        carrinho = await buscarDadosCarrinho(carrinho)
+    }
+
     res.json(
         carrinhos
-      );
+    );
 }
 
-function buscarDadosCarrinho(carrinho){
-     const produtos = await db.all(
+async function buscarDadosCarrinho(carrinho) {
+    const produtos = await db.all(
         `SELECT pc.id AS productcartid, p.*
          FROM product p
          INNER JOIN productcart pc ON p.id = pc.productid
