@@ -138,12 +138,12 @@ export async function listarCarrinhos(req, res) {
 
     const db = await getDatabase();
 
-    const carrinhos = await db.get(
+    const carrinhos = await db.all(
         "SELECT * FROM cart WHERE userid = ? ORDER BY date DESC",
         [usuarioid]
     );
     
-    res.json({
+    res.json(
         carrinhos
-      });
+      );
 }

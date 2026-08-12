@@ -104,7 +104,7 @@ export async function atualizar(req, res) {
     const novoEmail = email ?? atual.email;
     const novoTelefone = cellphone ?? atual.cellphone;
     const novaFoto = novaFotoUpload ?? req.body.foto ?? atual.foto;
-    let novaSenha = atual.senha;
+    let novaSenha = atual.password;
 
     if (password) {
       novaSenha = await bcrypt.hash(password, SALT_ROUNDS);
