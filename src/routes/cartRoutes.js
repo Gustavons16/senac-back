@@ -9,7 +9,7 @@ router.use(autenticarJWT);
 // Adicionar produto ao carrinho
 router.post(
   '/produto/:produtoid',
-  /* #swagger.tags = ['Carrinho'] */
+  /* #swagger.tags = ['Cart'] */
   /* #swagger.summary = 'Adicionar produto ao carrinho' */
   /* #swagger.security = [{ "bearerAuth": [] }] */
   controller.adicionarProduto
@@ -18,7 +18,7 @@ router.post(
 // Remover produto do carrinho
 router.delete(
   '/productcart/:productcartid',
-  /* #swagger.tags = ['Carrinho'] */
+  /* #swagger.tags = ['Cart'] */
   /* #swagger.summary = 'Remover produto do carrinho' */
   /* #swagger.security = [{ "bearerAuth": [] }] */
   controller.removerProduto
@@ -27,7 +27,7 @@ router.delete(
 // Listar produtos do carrinho
 router.get(
   '/produtos',
-  /* #swagger.tags = ['Carrinho'] */
+  /* #swagger.tags = ['Cart'] */
   /* #swagger.summary = 'Listar produtos do carrinho' */
   /* #swagger.security = [{ "bearerAuth": [] }] */
   controller.listarProdutos
@@ -35,7 +35,7 @@ router.get(
 
 router.get(
   '/carrinhos',
-  /* #swagger.tags = ['Carrinho'] */
+  /* #swagger.tags = ['Cart'] */
   /* #swagger.summary = 'Listar produtos do carrinho' */
   /* #swagger.security = [{ "bearerAuth": [] }] */
   controller.listarCarrinhos
@@ -44,7 +44,7 @@ router.get(
 // Atualizar status de um pedido já finalizado
 router.put(
   '/:id/status',
-  /* #swagger.tags = ['Carrinho'] */
+  /* #swagger.tags = ['Cart'] */
   /* #swagger.summary = 'Atualizar status do carrinho' */
   /* #swagger.security = [{ "bearerAuth": [] }] */
   controller.atualizarStatusPedido

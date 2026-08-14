@@ -8,7 +8,7 @@ router.use(autenticarJWT);
 
 router.get(
     '/dayproducts/:day/store/:storeid' ,
-      /* #swagger.tags = ['Produto'] */
+      /* #swagger.tags = ['Product'] */
     /* #swagger.summary = 'Listar produtos do dia' */
     /* #swagger.security = [{ "bearerAuth": [] }] */
     controller.listardia
@@ -17,7 +17,7 @@ router.get(
 
 router.get(
       '/:storeid' ,
-      /* #swagger.tags = ['Produto'] */
+      /* #swagger.tags = ['Product'] */
     /* #swagger.summary = 'Listar produto da loja selecionada' */
     /* #swagger.security = [{ "bearerAuth": [] }] */
     controller.listar
@@ -25,7 +25,7 @@ router.get(
 
 router.post(
     '/',
-     /* #swagger.tags = ['Produto'] */
+     /* #swagger.tags = ['Product'] */
         /* #swagger.summary = 'criar Produto' */
         /* #swagger.security = [{ "bearerAuth": [] }] */
         controller.criar
@@ -33,14 +33,14 @@ router.post(
 
 router.delete(
     '/:id',
-    /* #swagger.tags = ['Produto'] */
+    /* #swagger.tags = ['Product'] */
     /* #swagger.summary = 'Remover produto' */
     /* #swagger.security = [{ "bearerAuth": [] }] */
     controller.remover
 );
 router.get(
     '/produto/:id',
-    /* #swagger.tags = ['Produto'] */
+    /* #swagger.tags = ['Product'] */
         /* #swagger.summary = 'Buscar produto pelo Id' */
         /* #swagger.security = [{ "bearerAuth": [] }] */
         controller.buscar

@@ -7,7 +7,7 @@ router.use(autenticarJWT);
 
 router.get(
     '/:id',
-    /* #swagger.tags = ['Categoria'] */
+    /* #swagger.tags = ['Category'] */
     /* #swagger.summary = 'Listar Categoria da store logado' */
     /* #swagger.security = [{ "bearerAuth": [] }] */
     controller.listar
@@ -15,7 +15,7 @@ router.get(
 
 router.post(
     '/', 
-    /* #swagger.tags = ['Categoria'] */
+    /* #swagger.tags = ['Category'] */
     /* #swagger.summary = 'criar categoria pra store logada' */
     /* #swagger.security = [{ "bearerAuth": [] }] */
     controller.criar
@@ -23,7 +23,7 @@ router.post(
 
 router.delete(
     '/:id',
-    /* #swagger.tags = ['Categoria'] */
+    /* #swagger.tags = ['Category'] */
     /* #swagger.summary = 'Remover Categoria' */
     /* #swagger.security = [{ "bearerAuth": [] }] */
     controller.remover
