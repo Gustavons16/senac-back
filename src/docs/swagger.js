@@ -13,7 +13,7 @@ const endpointsFiles = [path.join(__dirname, '../../index.js')];
 
 const doc = {
   info: {
-    title: 'API REST Didatica - SENAC',
+    title: 'API-REST QUITUTES DA MÔNICA',
     description: 'Documentacao gerada automaticamente com swagger-autogen.',
     version: '1.0.0'
   },
